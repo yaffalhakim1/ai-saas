@@ -1,3 +1,4 @@
+import { checkApiLimit, increaseApiLimit } from "@/lib/api-limit";
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 import { Configuration, OpenAIApi } from "openai";
@@ -24,6 +25,14 @@ export async function POST(req: Request) {
         status: 400,
       });
     }
+
+    const freeTrial = await checkApiLimit();
+
+    if (!freeTrial) {
+      return new NextResponse("free trial has expired", {
+        status: 403,
+      });
+    }
     const response = await replicate.run(
       "riffusion/riffusion:8cf61ea6c56afd61d8f5b9ffd14d7c216c0a93844ce2d82ac1c9ecc9c7f24e05",
       {
@@ -32,6 +41,8 @@ export async function POST(req: Request) {
         },
       }
     );
+
+    await increaseApiLimit();
 
     return NextResponse.json(response);
   } catch (error) {
