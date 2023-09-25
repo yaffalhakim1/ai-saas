@@ -52,6 +52,3 @@ export async function POST(req: Request) {
     return new NextResponse("Internal Error", { status: 500 });
   }
 }
-
-//planetscale: pscale_pw_Dbe4J4oAEGPVgXxjzpliikSNFRZ22LhioVm1fy3o7AM
-//unameplanetscale: 7dssa4t0qxnrhssifmek
