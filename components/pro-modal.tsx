@@ -15,6 +15,7 @@ import {
 import { Card } from "./ui/card";
 import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
+import { useState } from "react";
 
 const tools = [
   {
@@ -51,6 +52,7 @@ const tools = [
 
 const ProModal = () => {
   const proModal = useProModal();
+  const [loading, setLoading] = useState(false);
   return (
     <Dialog open={proModal.isOpen} onOpenChange={proModal.close}>
       <DialogContent>
